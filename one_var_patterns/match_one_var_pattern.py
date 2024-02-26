@@ -10,7 +10,8 @@ def match_one_var_pattern(
 
     num_terminals_in_word = len(word)
     num_terminals_in_pattern = sum(1 for char in pattern if char != new_var_char)
-    num_variables_in_pattern = len(pattern) - num_terminals_in_pattern
+    num_variables_in_pattern = sum(1 for char in pattern if char == new_var_char)
+    # num_variables_in_pattern = len(pattern) - num_terminals_in_pattern
     if num_variables_in_pattern == 0:
         if pattern == word:
             return True, {}
@@ -37,7 +38,8 @@ def match_one_var_pattern(
     if pattern_to_string != word:
         return False, None
 
-    if var_match == '':
-        return False, None
+    # закоментировал, чтобы обрабатывать кейс, когда переменная равна пустой
+    # if var_match == '':
+    #     return False, None
 
     return True, {var_char: var_match}
