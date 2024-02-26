@@ -61,12 +61,3 @@ def match_xx_patterns(s: str, blocks: list[str], matches: dict[str, str]):
         match_xx_patterns(s=new_s, blocks=blocks[1:], matches=matches)  # продолжаем мэтчить
 
     return matches
-
-
-if __name__ == '__main__':
-    word = 'abababab'
-    pattern = 'x1_x1_a_b_x1'
-    one_variable_blocks = parse_pattern(pattern=pattern)
-    print(match_xx_patterns(s=word, blocks=one_variable_blocks, matches={}))
-    # a = [None, None, None]
-    # print(a)

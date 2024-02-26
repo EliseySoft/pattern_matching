@@ -41,9 +41,3 @@ def match_one_var_pattern(
         return False, None
 
     return True, {var_char: var_match}
-
-
-# if __name__ == '__main__':
-#     word = 'aabaabaab'
-#     pattern = 'a_x1_a_x1_a_x1'
-#     print(match_one_var_pattern(word=word, pattern=pattern, var_char='x1'))

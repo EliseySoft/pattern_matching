@@ -47,8 +47,8 @@ def process_variables(s: str, unprocessed_vars: list[str]):
     return d
 
 
-def match_regular_pattern(word: str, regular_pattern: str) -> tuple[bool, dict[Any, Any]]:
-    blocks = parse_regular_pattern(regular_pattern=regular_pattern)
+def match_regular_pattern(word: str, pattern: str) -> tuple[bool, dict[Any, Any]]:
+    blocks = parse_regular_pattern(regular_pattern=pattern)
     word_pointer = 0
     d = {}  # словарь, в котором будут лежать мэтчи переменных на подстроки
     number_of_unprocessed_variables: int = 0
@@ -97,20 +97,3 @@ def match_regular_pattern(word: str, regular_pattern: str) -> tuple[bool, dict[A
         processed_variables = process_variables(s=substring_for_variables, unprocessed_vars=unprocessed_vars)
         d.update(processed_variables)
     return True, d
-
-
-# if __name__ == "__main__":
-#     word = 'unajvvnkuratvtxxmgsg'
-#     pattern = 'x1_x2_x3_g'
-#     # original_matches = {'x1': 'unajvv', 'x2': 'nkuratvtxx', 'x3': 'mgs'}
-#
-#     result, matches = match_regular_pattern(word=word, regular_pattern=pattern)
-#     pattern_is_correct = check_pattern(s=word, pattern=pattern, matches=matches)
-#
-#     if pattern_is_correct:
-#         print("Correct!")
-#     else:
-#         print("Incorrect!")
-#         print(f's: {word}')
-#         print(f'p: {pattern}')
-#         print(f'matches: {matches}')

@@ -37,7 +37,7 @@ def find_rep_vars(pattern: str, first_rep_var: str) -> list[str]:
     return rep_vars
 
 
-def match_rep_var_pattern(s: str, pattern: str) -> dict[str, str] | list[dict[str, str]]:
+def match_rep_var_pattern(s: str, pattern: str) -> dict[str, str]:
     first_rep_var = find_first_rep_var(pattern)
     rep_vars = find_rep_vars(pattern, first_rep_var=first_rep_var)
     start_perms, end_perms = create_permutations(n=len(s), k=len(rep_vars))
@@ -73,16 +73,3 @@ def match_rep_var_pattern(s: str, pattern: str) -> dict[str, str] | list[dict[st
                 rep_vars_images.update(matches)
                 return rep_vars_images
     return {}
-
-
-# if __name__ == '__main__':
-#     word = 'jbxpqgxpjbqgxpjbxpxp'
-#     pattern = 'x3_x2_x1_x2_x3_x1_x2_x3_x2_x2'
-#
-#     matches = match_rep_var_pattern(s=word, pattern=pattern)
-#     solution_is_correct = check_pattern(s=word, pattern=pattern, matches=matches)
-#
-#     if solution_is_correct:
-#         print('Correct!')
-#     else:
-#         print('Incorrect!')
