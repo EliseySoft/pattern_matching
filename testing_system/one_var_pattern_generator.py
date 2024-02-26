@@ -61,7 +61,7 @@ class OneVarPatternGenerator(BasicGenerator):
         d = {}
 
         variable = 'x1'
-        var_len = random.randint(1, max_var_len)
+        var_len = random.randint(0, max_var_len)
         var_match = ''.join([random.choice(self.alphabet) for _ in range(var_len)])
         d[variable] = var_match
 
