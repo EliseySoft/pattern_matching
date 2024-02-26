@@ -37,13 +37,18 @@ def get_block_type(block: str) -> BlockType:
 
 def process_variables(s: str, unprocessed_vars: list[str]):
     d = {}
-    assert len(s) >= len(unprocessed_vars)
+    # assert len(s) >= len(unprocessed_vars)
+
+    # если переменных больше, чем букв в строке, то мы присваиваем лишним переменным пустые значения
+    shift = max(0, len(unprocessed_vars) - len(s))
+    for i in range(shift):
+        d[unprocessed_vars[i]] = ''
 
     for i in range(len(s)):
         if i == len(unprocessed_vars) - 1:
-            d[unprocessed_vars[i]] = s[i:]
+            d[unprocessed_vars[i + shift]] = s[i:]
             break
-        d[unprocessed_vars[i]] = s[i]
+        d[unprocessed_vars[i + shift]] = s[i]
     return d
 
 
@@ -74,17 +79,17 @@ def match_regular_pattern(word: str, pattern: str) -> tuple[bool, dict[Any, Any]
         block_type = get_block_type(block)
 
         if block_type == BlockType.variable:
-            word_pointer += 1
+            # word_pointer += 1  # закомментировал для случаев, когда переменная может быть пустой
             number_of_unprocessed_variables += 1
             unprocessed_vars.append(block)
         else:
             start = kmp(s=block, t=word[word_pointer:]) + word_pointer
             finish = start + len(block)
 
-            if start == word_pointer - 1:
+            if start == word_pointer - 1:  # когда подстрока не нашлась с помощью КМП
                 return False, {}
 
-            substring_for_variables = word[word_pointer - number_of_unprocessed_variables:start]
+            substring_for_variables = word[word_pointer:start]
             processed_variables = process_variables(s=substring_for_variables, unprocessed_vars=unprocessed_vars)
             d.update(processed_variables)
             number_of_unprocessed_variables = 0
@@ -93,7 +98,7 @@ def match_regular_pattern(word: str, pattern: str) -> tuple[bool, dict[Any, Any]
             word_pointer = finish
 
     if len(unprocessed_vars) > 0:
-        substring_for_variables = word[word_pointer - number_of_unprocessed_variables:]
+        substring_for_variables = word[word_pointer:]
         processed_variables = process_variables(s=substring_for_variables, unprocessed_vars=unprocessed_vars)
         d.update(processed_variables)
     return True, d
