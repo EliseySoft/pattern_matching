@@ -31,7 +31,7 @@ def convert_to_repetitions(repetitions, shift, left, cntr, l, k1, k2):
 
 def find_xx_repetitions(s, shift=0, repetitions=None):
     if repetitions is None:
-        repetitions = []
+        repetitions = [(-1, -1)]  # повторение для пустой переменной
 
     n = len(s)
     if n <= 1:

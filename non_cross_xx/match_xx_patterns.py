@@ -13,7 +13,13 @@ def match_xx_block_with_str(s: str, block: str, repetition: tuple[int, int]) -> 
 
     block_chars = block.split('_')  # все терминалы и переменные в блоке
     variable = block_chars[0]  # переменная
+
+    # для случая, когда переменная равна пустой
+    # if repetition[0] == -1 and repetition[1] == -1:
+    #     variable_match = ''
+    # else:
     variable_match = s[repetition[0]:repetition[0] + (repetition[1] - repetition[0] + 1) // 2]  # мэтч для переменной
+
     word_pointer = 0
 
     for char in block_chars:

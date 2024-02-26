@@ -1,6 +1,6 @@
 from enum import Enum
 
-from non_cross_xx.match_xx_patterns import match_xx_patterns, find_xx_repetitions, match_xx_block_with_str
+from non_cross_xx.match_xx_patterns import find_xx_repetitions, match_xx_block_with_str
 from non_cross_xvx.match_xvx_patterns import find_xvx_repetitions, match_xvx_block_with_str
 from utils import parse_pattern, check_pattern, VARIABLES
 
@@ -60,7 +60,7 @@ def match_non_cross_pattern(s: str, blocks: list[str], matches: dict[str, str], 
 
     if block_type == BlockType.xx_block:
         repetitions = list(set(find_xx_repetitions(s=s)))
-        repetitions = [rep for rep in repetitions if rep[0] == 0]
+        repetitions = [rep for rep in repetitions if (rep[0] == 0 or rep[0] == -1)]
 
         for repetition in repetitions:
             flag, new_s, variable, variable_match = match_xx_block_with_str(s, block, repetition=repetition)
@@ -89,6 +89,9 @@ def match_non_cross_pattern(s: str, blocks: list[str], matches: dict[str, str], 
                                                                              repetition=repetition)
 
             if not flag:
+                continue
+
+            if len(blocks) == 1 and new_s != '':
                 continue
 
             matches[variable] = variable_match

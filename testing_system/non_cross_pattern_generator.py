@@ -20,7 +20,7 @@ class NonCrossPatternGenerator(BasicGenerator):
 
         variable = self.variables[len(d)]
         # для случая хх длина переменной <= (block_len // 2)
-        var_len = random.randint(1, min(max_var_len, block_len // 2))
+        var_len = random.randint(0, min(max_var_len, block_len // 2))
         var_match = ''.join([random.choice(self.alphabet) for _ in range(var_len)])
         d[variable] = var_match
 
@@ -53,7 +53,7 @@ class NonCrossPatternGenerator(BasicGenerator):
 
         variable = self.variables[len(d)]
         # для случая хvх длина переменной <= ((block_len - v_substring_len) // 2)
-        var_len = random.randint(1, min(max_var_len, (block_len - v_substring_len) // 2))
+        var_len = random.randint(0, min(max_var_len, (block_len - v_substring_len) // 2))
         var_match = ''.join([random.choice(self.alphabet) for _ in range(var_len)])
         d[variable] = var_match
 
@@ -123,7 +123,9 @@ class NonCrossPatternGenerator(BasicGenerator):
             )
 
         elif pattern_case == PatternCase.hard_case:
-            s, pattern, matches = self.generate_hard_case(s_len=s_len, max_var_len=max_var_len)
+            s, pattern, matches = self.generate_hard_case(
+                s_len=s_len, max_var_len=max_var_len, max_block_len=max_block_len
+            )
 
         else:
             raise ValueError(f'Invalid case name: {pattern_case}. Available cases: random_case, hard_case')
