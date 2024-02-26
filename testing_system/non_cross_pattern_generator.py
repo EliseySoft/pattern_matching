@@ -129,32 +129,3 @@ class NonCrossPatternGenerator(BasicGenerator):
             raise ValueError(f'Invalid case name: {pattern_case}. Available cases: random_case, hard_case')
 
         return s, pattern, matches
-
-
-if __name__ == '__main__':
-    generator = NonCrossPatternGenerator()
-    counter = 0
-    for _ in range(10000):
-        s, pattern, original_matches = generator.generate(
-            s_len=20, pattern_case=PatternCase.random_case, max_var_len=5, max_block_len=15
-        )
-        # print(f's: {s}')
-        # print(f'pattern: {pattern}')
-        # print(f'original matches: {original_matches}', end='\n\n')
-
-        parsed_pattern = parse_pattern(pattern)
-        matches = match_non_cross_pattern(s=s, blocks=parsed_pattern, matches={}, num_of_blocks=len(parsed_pattern))
-
-        is_solution_correct = generator.check_pattern(s=s, pattern=pattern, matches=matches)
-        if is_solution_correct:
-            # print(f'Correct solution!')
-            continue
-        else:
-            counter += 1
-            print(f'Incorrect solution!')
-            print(f's: {s}')
-            print(f'pattern: {pattern}')
-            print(f'Found match: {matches}, original matches: {original_matches}')
-
-    if counter == 0:
-        print('Ok!')

@@ -90,27 +90,3 @@ class OneRepVarPatternGenerator(BasicGenerator):
             raise ValueError(f'Invalid pattern!\nS: {s}, pattern: {pattern}, matches: {d}')
 
         return s, pattern, d
-
-
-if __name__ == '__main__':
-    generator = OneRepVarPatternGenerator()
-    counter = 0
-    for _ in range(100000):
-        s, pattern, original_matches = generator.generate(
-            s_len=50, pattern_case=PatternCase.random_case, max_var_len=10
-        )
-
-        matches = match_one_rep_var_pattern(s=s, pattern=pattern)
-
-        is_solution_correct = generator.check_pattern(s=s, pattern=pattern, matches=matches)
-        if is_solution_correct:
-            continue
-        else:
-            counter += 1
-            print(f'Incorrect solution!')
-            print(f's: {s}')
-            print(f'pattern: {pattern}')
-            print(f'Found match: {matches}, original matches: {original_matches}')
-
-    if counter == 0:
-        print('Ok!')

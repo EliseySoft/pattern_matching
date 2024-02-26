@@ -69,7 +69,7 @@ class RegularPatternGenerator(BasicGenerator):
         d = {}
 
         while len(s) < s_len:
-            choice = random.choices([CharType.terminal, CharType.variable], weights=[0.33, 0.67])[0]
+            choice = random.choices([CharType.terminal, CharType.variable], weights=[0.5, 0.5])[0]
 
             if choice == CharType.terminal:
                 char = random.choice(self.alphabet)
@@ -107,21 +107,3 @@ class RegularPatternGenerator(BasicGenerator):
             raise ValueError(f'Invalid pattern!\nS: {s}, pattern: {pattern}, matches: {d}')
 
         return s, pattern, d
-
-
-if __name__ == '__main__':
-    generator = RegularPatternGenerator()
-
-    for i in range(1000):
-        s, pattern, original_matches = generator.generate(s_len=1000, pattern_case=PatternCase('hard_case'))
-        # print(f's: {s}')
-        # print(f'pattern: {pattern}')
-        # print(f'original_matches: {original_matches}')
-
-        result, matches = match_regular_pattern(word=s, regular_pattern=pattern)
-        if result:
-            check_result = generator.check_pattern(s=s, pattern=pattern, matches=matches)
-            if check_result:
-                print(f'Done!')
-            else:
-                print(f'Error: s = {s}, pattern = {pattern}, original_matches = {original_matches}')

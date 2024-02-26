@@ -95,21 +95,3 @@ class OneVarPatternGenerator(BasicGenerator):
             raise ValueError(f'Invalid pattern!\nS: {s}, pattern: {pattern}, matches: {d}')
 
         return s, pattern, d
-
-
-if __name__ == '__main__':
-    generator = OneVarPatternGenerator()
-
-    for i in range(1000):
-        s, pattern, original_matches = generator.generate(s_len=i + 20, pattern_case=PatternCase('random_case'))
-        print(len(s))
-
-        result, matches = match_one_var_pattern(word=s, pattern=pattern, var_char='x1')
-        if result:
-            check_result = generator.check_pattern(s=s, pattern=pattern, matches=matches)
-            if check_result:
-                print('Done!')
-            else:
-                print(f'Error: s = {s}, pattern = {pattern}, matches = {matches}')
-        else:
-            print(f'Error: s = {s}, pattern = {pattern}, original matches = {original_matches}')

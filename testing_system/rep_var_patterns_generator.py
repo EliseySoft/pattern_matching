@@ -81,31 +81,3 @@ class RepVarPatternsGenerator(BasicGenerator):
             raise ValueError(f'Invalid pattern!\nS: {s}, pattern: {pattern}, matches: {d}')
 
         return s, pattern, d
-
-
-if __name__ == '__main__':
-    generator = RepVarPatternsGenerator()
-    counter = 0
-    for _ in range(100):
-        s, pattern, original_matches = generator.generate(s_len=30, pattern_case=PatternCase.random_case, max_var_len=2, k=3)
-        # print(len(s))
-        # print(f's: {s}')
-        # print(f'pattern: {pattern}')
-        # print(f'original_matches: {original_matches}')
-
-        matches = match_rep_var_pattern(s=s, pattern=pattern)
-        solution_is_correct = generator.check_pattern(s=s, pattern=pattern, matches=matches)
-
-        if solution_is_correct:
-            # print('Ok!')
-            continue
-        else:
-            counter += 1
-            print('Error!')
-            print(f's: {s}')
-            print(f'pattern: {pattern}')
-            print(f'original_matches: {original_matches}')
-            print(f'found_matches: {matches}', end='\n\n')
-
-    if counter == 0:
-        print('Ok!')
