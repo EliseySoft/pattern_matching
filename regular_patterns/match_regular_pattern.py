@@ -52,7 +52,7 @@ def process_variables(s: str, unprocessed_vars: list[str]):
     return d
 
 
-def match_regular_pattern(word: str, pattern: str) -> tuple[bool, dict[Any, Any]]:
+def match_regular_pattern(s: str, pattern: str) -> dict[str, str]:
     blocks = parse_regular_pattern(regular_pattern=pattern)
     word_pointer = 0
     d = {}  # словарь, в котором будут лежать мэтчи переменных на подстроки
@@ -63,17 +63,17 @@ def match_regular_pattern(word: str, pattern: str) -> tuple[bool, dict[Any, Any]
     finish_block = blocks[-1]  # последний блок
 
     if get_block_type(start_block) == BlockType.terminals:  # убираем первый блок
-        if start_block == word[:len(start_block)]:
-            word = word[len(start_block):]
+        if start_block == s[:len(start_block)]:
+            s = s[len(start_block):]
             blocks = blocks[1:]
         else:
-            return False, {}
+            return {}
     if get_block_type(finish_block) == BlockType.terminals:  # убираем последний блок
-        if finish_block == word[len(word) - len(finish_block):]:
-            word = word[:len(word) - len(finish_block)]
+        if finish_block == s[len(s) - len(finish_block):]:
+            s = s[:len(s) - len(finish_block)]
             blocks = blocks[:-1]
         else:
-            return False, {}
+            return {}
 
     for block in blocks:
         block_type = get_block_type(block)
@@ -83,13 +83,13 @@ def match_regular_pattern(word: str, pattern: str) -> tuple[bool, dict[Any, Any]
             number_of_unprocessed_variables += 1
             unprocessed_vars.append(block)
         else:
-            start = kmp(s=block, t=word[word_pointer:]) + word_pointer
+            start = kmp(s=block, t=s[word_pointer:]) + word_pointer
             finish = start + len(block)
 
             if start == word_pointer - 1:  # когда подстрока не нашлась с помощью КМП
-                return False, {}
+                return {}
 
-            substring_for_variables = word[word_pointer:start]
+            substring_for_variables = s[word_pointer:start]
             processed_variables = process_variables(s=substring_for_variables, unprocessed_vars=unprocessed_vars)
             d.update(processed_variables)
             number_of_unprocessed_variables = 0
@@ -98,7 +98,7 @@ def match_regular_pattern(word: str, pattern: str) -> tuple[bool, dict[Any, Any]
             word_pointer = finish
 
     if len(unprocessed_vars) > 0:
-        substring_for_variables = word[word_pointer:]
+        substring_for_variables = s[word_pointer:]
         processed_variables = process_variables(s=substring_for_variables, unprocessed_vars=unprocessed_vars)
         d.update(processed_variables)
-    return True, d
+    return d

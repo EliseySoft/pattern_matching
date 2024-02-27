@@ -57,7 +57,7 @@ def match_rep_var_pattern(s: str, pattern: str) -> dict[str, str]:
         num_of_vars = sum(1 for char in set(new_pattern.split('_')) if char in VARIABLES)
 
         if num_of_vars == 1:
-            result, matches = match_one_var_pattern(word=s, pattern=new_pattern, var_char=first_rep_var)
+            result, matches = match_one_var_pattern(s=s, pattern=new_pattern, var_char=first_rep_var)
 
             if result:
                 rep_vars_images.update(matches)

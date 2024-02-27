@@ -54,11 +54,11 @@ def match_one_rep_var_pattern(s: str, pattern: str) -> dict[str, str]:
 
             regular_pattern = '_'.join([rep_var_image if char == rep_var else char for char in pattern.split('_')])
             try:
-                result, match = match_regular_pattern(word=s, pattern=regular_pattern)
+                match = match_regular_pattern(s=s, pattern=regular_pattern)
             except AssertionError:  # может быть не состыковка в сопоставлении, поэтому используем try/except
                 continue
 
-            if result:
+            if len(match) != 0:
                 d.update(match)
                 # matches.append(d)
                 return d
