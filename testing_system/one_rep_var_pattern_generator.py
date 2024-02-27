@@ -37,7 +37,7 @@ class OneRepVarPatternGenerator(BasicGenerator):
         number_of_repetitions = random.randint(min_rep, max_rep)
 
         rep_var = 'x1'
-        rep_var_len = random.randint(1, max_var_len)
+        rep_var_len = random.randint(0, max_var_len)
         rep_var_image = ''.join([random.choice(self.alphabet) for _ in range(rep_var_len)])
         d[rep_var] = rep_var_image
         num_of_rep_var_occurences = 0
@@ -54,7 +54,7 @@ class OneRepVarPatternGenerator(BasicGenerator):
 
                 if var_choice == VariableType.usual:
                     usual_var = self.variables[len(d)]  # взяли новую переменную
-                    usual_var_len = random.randint(1, max_var_len)  # определили её длину
+                    usual_var_len = random.randint(0, max_var_len)  # определили её длину
                     usual_var_image = ''.join([random.choice(self.alphabet) for _ in range(usual_var_len)])  # определили её изображение
                     d[usual_var] = usual_var_image  # добавил её мэтч в словарь
 
@@ -76,7 +76,7 @@ class OneRepVarPatternGenerator(BasicGenerator):
 
         if len(d) == 1:  # всего одна переменная, и та повторяющаяся, надо добавить одну дополнительную переменную
             usual_var = self.variables[len(d)]  # взяли новую переменную
-            usual_var_len = random.randint(1, max_var_len)  # определили её длину
+            usual_var_len = random.randint(0, max_var_len)  # определили её длину
             usual_var_image = ''.join(
                 [random.choice(self.alphabet) for _ in range(usual_var_len)])  # определили её изображение
             d[usual_var] = usual_var_image  # добавил её мэтч в словарь

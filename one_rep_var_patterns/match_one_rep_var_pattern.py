@@ -44,6 +44,19 @@ def match_one_rep_var_pattern(s: str, pattern: str) -> dict[str, str]:
     parsed_pattern = parse_one_rep_var_pattern(one_rep_var_pattern=pattern)
     rep_var, counter = count_rep_var(parsed_pattern=parsed_pattern)
 
+    # повторяющаяся переменная равна пустой строке
+    rep_var_image = ''
+    d = {rep_var: rep_var_image}
+    pattern_chars = pattern.split('_')
+
+    regular_pattern = '_'.join([char for char in pattern_chars if char != rep_var])
+
+    matches = match_regular_pattern(s=s, pattern=regular_pattern)
+
+    if len(matches) != 0:
+        d.update(matches)
+        return d
+
     for l in range(1, len(s)):
         clusters = split_suffix_array(suffix_array=suffix_array, common_prefix_lens=prefixes_lens, l=l)
         clusters = [cluster for cluster in clusters if len(cluster) >= counter]
@@ -53,14 +66,11 @@ def match_one_rep_var_pattern(s: str, pattern: str) -> dict[str, str]:
             d = {rep_var: rep_var_image}
 
             regular_pattern = '_'.join([rep_var_image if char == rep_var else char for char in pattern.split('_')])
-            try:
-                match = match_regular_pattern(s=s, pattern=regular_pattern)
-            except AssertionError:  # может быть не состыковка в сопоставлении, поэтому используем try/except
-                continue
 
-            if len(match) != 0:
-                d.update(match)
-                # matches.append(d)
+            matches = match_regular_pattern(s=s, pattern=regular_pattern)
+
+            if len(matches) != 0:
+                d.update(matches)
                 return d
 
     # return matches
