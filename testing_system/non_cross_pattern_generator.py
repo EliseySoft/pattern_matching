@@ -1,6 +1,6 @@
 import random
 
-from non_cross_patterns.match_non_cross_patterns import match_non_cross_pattern, parse_pattern
+from non_cross_patterns.match_non_cross_patterns import _match_non_cross_pattern, parse_pattern
 from basic_generator import BasicGenerator
 from models import CharType, PatternCase, NonCrossBlockType
 

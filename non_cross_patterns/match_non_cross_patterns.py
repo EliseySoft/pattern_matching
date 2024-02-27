@@ -43,7 +43,7 @@ def find_v_substring(block: str) -> str:
     return ''.join(block_chars[start + 1:finish])
 
 
-def match_non_cross_pattern(s: str, blocks: list[str], matches: dict[str, str], num_of_blocks: int) -> dict[str, str]:
+def _match_non_cross_pattern(s: str, blocks: list[str], matches: dict[str, str], num_of_blocks: int) -> dict[str, str]:
     if len(blocks) == 0:
         return {}
 
@@ -75,7 +75,7 @@ def match_non_cross_pattern(s: str, blocks: list[str], matches: dict[str, str], 
             if new_s == '' and flag:
                 return matches
 
-            match_non_cross_pattern(s=new_s, blocks=blocks[1:], matches=matches, num_of_blocks=num_of_blocks)
+            _match_non_cross_pattern(s=new_s, blocks=blocks[1:], matches=matches, num_of_blocks=num_of_blocks)
 
             if len(matches) >= num_of_blocks:  # force выход из рекурсии
                 return matches
@@ -98,11 +98,17 @@ def match_non_cross_pattern(s: str, blocks: list[str], matches: dict[str, str], 
             if new_s == '' and flag:
                 return matches
 
-            match_non_cross_pattern(s=new_s, blocks=blocks[1:], matches=matches, num_of_blocks=num_of_blocks)
+            _match_non_cross_pattern(s=new_s, blocks=blocks[1:], matches=matches, num_of_blocks=num_of_blocks)
 
             if len(matches) >= num_of_blocks:  # force выход из рекурсии
                 return matches
     else:
         raise ValueError(f'Invalid block: {block}')
 
+    return matches
+
+
+def match_non_cross_pattern(s: str, pattern: str) -> dict[str, str]:
+    blocks = parse_pattern(pattern=pattern)
+    matches = _match_non_cross_pattern(s=s, blocks=blocks, matches={}, num_of_blocks=len(blocks))
     return matches

@@ -1,6 +1,6 @@
 import pytest
 
-from non_cross_patterns.match_non_cross_patterns import match_non_cross_pattern
+from non_cross_patterns.match_non_cross_patterns import _match_non_cross_pattern
 from utils import parse_pattern, check_pattern
 
 
@@ -25,6 +25,6 @@ from utils import parse_pattern, check_pattern
 ])
 def test_non_cross_pattern(s: str, pattern: str, expect_success: bool):
     blocks = parse_pattern(pattern)
-    matches = match_non_cross_pattern(s=s, blocks=blocks, matches={}, num_of_blocks=len(blocks))
+    matches = _match_non_cross_pattern(s=s, blocks=blocks, matches={}, num_of_blocks=len(blocks))
     result = check_pattern(s=s, pattern=pattern, matches=matches)
     assert result == expect_success
