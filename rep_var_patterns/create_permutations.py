@@ -33,27 +33,28 @@ def create_permutations(n: int, k: int) -> tuple[list[Any], list[Any]]:
             # perm2 = set(second_set[j])
             #
             # # if len(perm1.intersection(perm2)) == 0:
-            first_set_without_intersections.append(first_set[i])
-            second_set_without_intersections.append(second_set[j])
+            if not permutations_has_intersections(first_set[i], second_set[j]):
+                first_set_without_intersections.append(first_set[i])
+                second_set_without_intersections.append(second_set[j])
 
-    final_first_set = []
-    final_second_set = []
+    # final_first_set = []
+    # final_second_set = []
+    #
+    # # проверка, что перестановка не залазит в границы другой перестановки
+    #
+    # for i in range(len(first_set_without_intersections)):
+    #     perm1 = first_set_without_intersections[i]
+    #     perm2 = second_set_without_intersections[i]
+    #
+    #     has_intersections = permutations_has_intersections(perm1, perm2)
+    #
+    #     if has_intersections:
+    #         continue
+    #     else:
+    #         final_first_set.append(perm1)
+    #         final_second_set.append(perm2)
 
-    # проверка, что перестановка не залазит в границы другой перестановки
-
-    for i in range(len(first_set_without_intersections)):
-        perm1 = first_set_without_intersections[i]
-        perm2 = second_set_without_intersections[i]
-
-        has_intersections = permutations_has_intersections(perm1, perm2)
-
-        if has_intersections:
-            continue
-        else:
-            final_first_set.append(perm1)
-            final_second_set.append(perm2)
-
-    return final_first_set, final_second_set
+    return first_set_without_intersections, second_set_without_intersections
 
 
 # if __name__ == "__main__":
