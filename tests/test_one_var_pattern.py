@@ -31,6 +31,6 @@ from utils import check_pattern
     ('ximkwximcximbkeaximbtximecwximsaximyxim', 'x1_k_w_x1_c_x1_b_k_e_a_x1_b_t_x1_e_c_w_x1_s_a_x1_y_x1', True)
 ])
 def test_one_var_pattern(s: str, pattern: str, expect_success: bool):
-    _, matches = match_one_var_pattern(word=s, pattern=pattern)
+    _, matches = match_one_var_pattern(s=s, pattern=pattern)
     result = check_pattern(s=s, pattern=pattern, matches=matches)
     assert result == True

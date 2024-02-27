@@ -27,6 +27,6 @@ from utils import check_pattern
     ('lypzmpqoqermpbcbacisvixtfekptjhjvawhpokxcktxdupglfqpfv', 'l_y_p_x1_x2_x3_j_h_j_v_x4_x5_d_u_p_x6', True)
 ])
 def test_regular_pattern(s: str, pattern: str, expect_success: bool):
-    _, matches = match_regular_pattern(word=s, pattern=pattern)
+    matches = match_regular_pattern(s=s, pattern=pattern)
     result = check_pattern(s=s, pattern=pattern, matches=matches)
     assert result == expect_success
