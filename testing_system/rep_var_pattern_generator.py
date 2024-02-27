@@ -1,9 +1,8 @@
 import random
 
 
-from rep_var_patterns.match_rep_var_pattern import match_rep_var_pattern
-from basic_generator import BasicGenerator
-from models import CharType, VariableType, PatternCase
+from testing_system.basic_generator import BasicGenerator
+from testing_system.models import CharType, VariableType, PatternCase
 
 
 class RepVarPatternsGenerator(BasicGenerator):

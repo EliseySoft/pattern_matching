@@ -1,9 +1,8 @@
 import random
 
 from one_var_patterns.match_one_var_pattern import match_one_var_pattern
-from basic_generator import BasicGenerator
-from models import PatternCase
-from models import CharType
+from testing_system.basic_generator import BasicGenerator
+from testing_system.models import CharType
 
 
 class OneVarPatternGenerator(BasicGenerator):

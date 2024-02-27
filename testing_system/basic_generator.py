@@ -1,7 +1,7 @@
 from abc import ABC
 
 from utils import ALPHABET, VARIABLES
-from models import PatternCase
+from testing_system.models import PatternCase
 
 
 class BasicGenerator(ABC):

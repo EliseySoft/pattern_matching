@@ -1,8 +1,7 @@
 import random
 
-from regular_patterns.match_regular_pattern import match_regular_pattern
-from basic_generator import BasicGenerator
-from models import CharType, PatternCase
+from testing_system.basic_generator import BasicGenerator
+from testing_system.models import CharType
 
 
 class RegularPatternGenerator(BasicGenerator):

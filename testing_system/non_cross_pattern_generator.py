@@ -1,8 +1,7 @@
 import random
 
-from non_cross_patterns.match_non_cross_patterns import _match_non_cross_pattern, parse_pattern
-from basic_generator import BasicGenerator
-from models import CharType, PatternCase, NonCrossBlockType
+from testing_system.basic_generator import BasicGenerator
+from testing_system.models import CharType, PatternCase, NonCrossBlockType
 
 
 class NonCrossPatternGenerator(BasicGenerator):
