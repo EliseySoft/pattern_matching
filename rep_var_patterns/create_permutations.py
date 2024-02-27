@@ -8,9 +8,15 @@ def permutations_has_intersections(perm1: tuple[int, ...], perm2: tuple[int, ...
         start1 = min(perm1[i], perm2[i])  # фиксируем начало у первой перестановки
         end1 = max(perm1[i], perm2[i])  # фиксируем конец у первой перестановки
 
+        if start1 == -1 or end1 == -1:
+            continue
+
         for j in range(i + 1, len(perm1)):
             start2 = min(perm1[j], perm2[j])  # фиксируем начало у второй перестановки
             end2 = max(perm1[j], perm2[j])  # фиксируем конец у второй перестановки
+
+            if start2 == -1 or end2 == -1:
+                continue
 
             if start1 <= start2 <= end1 or start2 <= start1 <= end2:
                 has_intersections = True
@@ -20,46 +26,23 @@ def permutations_has_intersections(perm1: tuple[int, ...], perm2: tuple[int, ...
 
 
 def create_permutations(n: int, k: int) -> tuple[list[Any], list[Any]]:
-    numbers = list(range(n))
+    numbers = list(range(-1, n))
     first_set = list(permutations(numbers, k))
-    second_set = list(permutations(numbers, k))
 
-    first_set_without_intersections = []
-    second_set_without_intersections = []
+    final_first_set = []
+    final_second_set = []
 
     for i in range(len(first_set)):
+        first_set_values = set(first_set[i])
+        second_set_values = set(numbers).difference(first_set_values)
+        second_set_values.add(-1)
+        second_set_values = list(second_set_values)
+        second_set = list(permutations(second_set_values, k))
+
         for j in range(len(second_set)):
-            # perm1 = set(first_set[i])
-            # perm2 = set(second_set[j])
-            #
-            # # if len(perm1.intersection(perm2)) == 0:
-            if not permutations_has_intersections(first_set[i], second_set[j]):
-                first_set_without_intersections.append(first_set[i])
-                second_set_without_intersections.append(second_set[j])
 
-    # final_first_set = []
-    # final_second_set = []
-    #
-    # # проверка, что перестановка не залазит в границы другой перестановки
-    #
-    # for i in range(len(first_set_without_intersections)):
-    #     perm1 = first_set_without_intersections[i]
-    #     perm2 = second_set_without_intersections[i]
-    #
-    #     has_intersections = permutations_has_intersections(perm1, perm2)
-    #
-    #     if has_intersections:
-    #         continue
-    #     else:
-    #         final_first_set.append(perm1)
-    #         final_second_set.append(perm2)
+            # if not permutations_has_intersections(first_set[i], second_set[j]):
+            final_first_set.append(first_set[i])
+            final_second_set.append(second_set[j])
 
-    return first_set_without_intersections, second_set_without_intersections
-
-
-# if __name__ == "__main__":
-#     n = 6
-#     k = 2
-#     first_set, second_set = create_permutations(n, k)
-#     print(first_set)
-#     print(second_set)
+    return final_first_set, final_second_set

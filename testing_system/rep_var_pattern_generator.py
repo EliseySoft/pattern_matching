@@ -36,7 +36,7 @@ class RepVarPatternsGenerator(BasicGenerator):
         # set images for k repeatable variables
         for i in range(k):
             rep_var = self.variables[len(d)]
-            rep_var_len = random.randint(1, max_var_len)
+            rep_var_len = random.randint(0, max_var_len)
             rep_var_image = ''.join([random.choice(self.alphabet) for _ in range(rep_var_len)])
             d[rep_var] = rep_var_image
             rep_var_occurences[rep_var] = 0
@@ -53,7 +53,7 @@ class RepVarPatternsGenerator(BasicGenerator):
 
                 if var_choice == VariableType.usual:
                     usual_var = self.variables[len(d)]
-                    usual_var_len = random.randint(1, max_var_len)
+                    usual_var_len = random.randint(0, max_var_len)
                     usual_var_image = ''.join(
                         [random.choice(self.alphabet) for _ in range(usual_var_len)])
                     d[usual_var] = usual_var_image  # добавил её мэтч в словарь

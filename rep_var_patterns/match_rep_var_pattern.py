@@ -1,7 +1,7 @@
 from rep_var_patterns.create_permutations import create_permutations
 from one_rep_var_patterns.match_one_rep_var_pattern import match_one_rep_var_pattern
 from one_var_patterns.match_one_var_pattern import match_one_var_pattern
-from utils import VARIABLES, check_pattern
+from utils import VARIABLES
 
 
 def find_first_rep_var(pattern: str) -> str:
@@ -51,9 +51,24 @@ def match_rep_var_pattern(s: str, pattern: str) -> dict[str, str]:
             var = rep_vars[j]
             start = min(start_perm[j], end_perm[j])
             end = max(start_perm[j], end_perm[j])
-            rep_vars_images[var] = s[start:end+1]
+            if start == -1 or end == -1:
+                rep_vars_images[var] = ''
+            else:
+                rep_vars_images[var] = s[start:end]
 
-        new_pattern = '_'.join(rep_vars_images[char] if char in rep_vars_images else char for char in pattern.split('_'))  # получили one_rep_var_patterns
+        new_pattern = []
+        for char in pattern.split('_'):
+            if char in rep_vars_images:
+                if rep_vars_images[char] == '':
+                    continue
+                for ch in rep_vars_images[char]:
+                    new_pattern.append(ch)
+                    # new_pattern += f'_{rep_vars_images[char]}' if len(new_pattern) != 0 else char
+            else:
+                new_pattern.append(char)
+        new_pattern = '_'.join(new_pattern)
+
+        # new_pattern = '_'.join(rep_vars_images[char] if char in rep_vars_images else char for char in pattern.split('_'))  # получили one_rep_var_patterns
         num_of_vars = sum(1 for char in set(new_pattern.split('_')) if char in VARIABLES)
 
         if num_of_vars == 1:
@@ -73,3 +88,13 @@ def match_rep_var_pattern(s: str, pattern: str) -> dict[str, str]:
                 rep_vars_images.update(matches)
                 return rep_vars_images
     return {}
+
+
+if __name__ == '__main__':
+    s = 'kvkkrkkkdkjakzkfhkzk'
+    pattern = 'x1_x2_x1_x2_x3'
+    original_match = {'x1': '', 'x2': 'k', 'x3': '', 'x4': 'v', 'x5': '', 'x6': 'j', 'x7': '', 'x8': '', 'x9': 'z'}
+
+    matches = match_rep_var_pattern(s=s, pattern=pattern)
+
+    print(matches)
