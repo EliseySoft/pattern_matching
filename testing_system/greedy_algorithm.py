@@ -108,6 +108,27 @@ def greedy_matching_algorithm(s: str, pattern: str) -> Optional[dict[str, str]]:
         if start_is_invalid:
             continue
 
+        # проверка, что совпадает конец
+        pattern_chars = data.p.split('_')
+
+        last_occurence = len(pattern_chars) - 1
+        for i in range(len(pattern_chars) - 1, -1, -1):
+            if pattern_chars[i] in data.variables:
+                last_occurence = i + 1
+                break
+
+        finish_is_invalid = False
+
+        pattern_suffix = ''.join(pattern_chars[last_occurence: len(pattern_chars)])
+        word_suffix = data.w[len(data.w) - len(pattern_suffix):len(data.w)]
+
+        if pattern_suffix != word_suffix:
+            finish_is_invalid = True
+
+        if finish_is_invalid:
+            continue
+
+        # подбор вариантов значений для переменной
         variants = find_variants(data.w[start_from:])  # находим варианты значений для переменной (с пустой строкой)
 
         for variant in variants:
@@ -136,3 +157,10 @@ def greedy_matching_algorithm(s: str, pattern: str) -> Optional[dict[str, str]]:
             )
 
     return {}
+
+
+if __name__ == "__main__":
+    s = 'hbimbimqbim'
+    pattern = 'h_x1_x1_q_x1'
+    matches = greedy_matching_algorithm(s=s, pattern=pattern)
+    print(matches)
