@@ -36,7 +36,7 @@ class RepVarPatternsGenerator(BasicGenerator):
         # set images for k repeatable variables
         for i in range(k):
             rep_var = self.variables[len(d)]
-            rep_var_len = random.randint(0, max_var_len)
+            rep_var_len = random.randint(1, max_var_len)
             rep_var_image = ''.join([random.choice(self.alphabet) for _ in range(rep_var_len)])
             d[rep_var] = rep_var_image
             rep_var_occurences[rep_var] = 0
@@ -53,7 +53,7 @@ class RepVarPatternsGenerator(BasicGenerator):
 
                 if var_choice == VariableType.usual:
                     usual_var = self.variables[len(d)]
-                    usual_var_len = random.randint(0, max_var_len)
+                    usual_var_len = random.randint(1, max_var_len)
                     usual_var_image = ''.join(
                         [random.choice(self.alphabet) for _ in range(usual_var_len)])
                     d[usual_var] = usual_var_image  # добавил её мэтч в словарь
@@ -67,6 +67,61 @@ class RepVarPatternsGenerator(BasicGenerator):
                     pattern += rep_var_choice if len(pattern) == 0 else f'_{rep_var_choice}'
 
                     rep_var_occurences[rep_var_choice] += 1
+
+        for rep_var in rep_var_occurences:
+            if rep_var_occurences[rep_var] < 2:
+                split = 2 - rep_var_occurences[rep_var]
+                for _ in range(split):
+                    s += d[rep_var]
+                    pattern += rep_var if len(pattern) == 0 else f'_{rep_var}'
+
+        is_pattern_correct = self.check_pattern(s=s, pattern=pattern, matches=d)
+        if not is_pattern_correct:
+            raise ValueError(f'Invalid pattern!\nS: {s}, pattern: {pattern}, matches: {d}')
+
+        return s, pattern, d
+
+    def generate_hard_case(
+            self, s_len: int, max_var_len: int, k: int, min_rep=2, max_rep=2
+    ) -> tuple[str, str, dict[str, str]]:
+        """Генерирует сложный случай для шаблонов с k переменными"""
+
+        s = ''
+        pattern = ''
+        d = {}
+        # словарь, в нём лежит кол-во раз, которое встретилась каждая из повторяющихся переменных
+        rep_var_occurences = {}
+
+        for i in range(k):
+            rep_var = self.variables[len(d)]
+            rep_var_len = random.randint(1, max_var_len)
+            rep_var_image = ''.join([random.choice(self.alphabet) for _ in range(rep_var_len)])
+            d[rep_var] = rep_var_image
+            rep_var_occurences[rep_var] = 0
+
+        while len(s) < s_len:
+            choice = random.choices([VariableType.usual, VariableType.repeatable])[0]
+
+            if choice == VariableType.usual:
+                usual_var = self.variables[len(d)]
+                usual_var_len = random.randint(1, max_var_len)
+                usual_var_image = ''.join(
+                    [random.choice(self.alphabet) for _ in range(usual_var_len)])
+                d[usual_var] = usual_var_image  # добавил её мэтч в словарь
+
+                s += usual_var_image  # добавили изображение переменной в строку
+                pattern += usual_var if len(pattern) == 0 else f'_{usual_var}'
+
+            else:
+                rep_var_choice = random.choices(list(rep_var_occurences.keys()))[0]  # выбираем встречающуюся переменную
+
+                if rep_var_occurences[rep_var_choice] > 2:  # мы не хотим, чтобы 1 переменная входила слишком много раз
+                    continue
+
+                s += d[rep_var_choice]
+                pattern += rep_var_choice if len(pattern) == 0 else f'_{rep_var_choice}'
+
+                rep_var_occurences[rep_var_choice] += 1
 
         for rep_var in rep_var_occurences:
             if rep_var_occurences[rep_var] < 2:
