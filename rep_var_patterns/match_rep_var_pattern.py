@@ -51,7 +51,7 @@ def match_rep_var_pattern(s: str, pattern: str) -> dict[str, str]:
             var = rep_vars[j]
             start = min(start_perm[j], end_perm[j])
             end = max(start_perm[j], end_perm[j])
-            if start == -1 or end == -1:
+            if start == -1:
                 rep_vars_images[var] = ''
             else:
                 rep_vars_images[var] = s[start:end]
@@ -88,13 +88,3 @@ def match_rep_var_pattern(s: str, pattern: str) -> dict[str, str]:
                 rep_vars_images.update(matches)
                 return rep_vars_images
     return {}
-
-
-if __name__ == '__main__':
-    s = 'kvkkrkkkdkjakzkfhkzk'
-    pattern = 'x1_x2_x1_x2_x3'
-    original_match = {'x1': '', 'x2': 'k', 'x3': '', 'x4': 'v', 'x5': '', 'x6': 'j', 'x7': '', 'x8': '', 'x9': 'z'}
-
-    matches = match_rep_var_pattern(s=s, pattern=pattern)
-
-    print(matches)

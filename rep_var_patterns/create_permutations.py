@@ -26,7 +26,9 @@ def permutations_has_intersections(perm1: tuple[int, ...], perm2: tuple[int, ...
 
 
 def create_permutations(n: int, k: int) -> tuple[list[Any], list[Any]]:
-    numbers = list(range(-1, n))
+    numbers = list(range(n))
+    for _ in range(k):  # для пустых строк, но это замедляет алгоритм
+        numbers.append(-1)
     first_set = list(permutations(numbers, k))
 
     final_first_set = []
@@ -34,14 +36,12 @@ def create_permutations(n: int, k: int) -> tuple[list[Any], list[Any]]:
 
     for i in range(len(first_set)):
         first_set_values = set(first_set[i])
-        second_set_values = set(numbers).difference(first_set_values)
-        second_set_values.add(-1)
-        second_set_values = list(second_set_values)
+        second_set_values = list(set(list(range(n))).difference(first_set_values))
         second_set = list(permutations(second_set_values, k))
 
         for j in range(len(second_set)):
 
-            if not permutations_has_intersections(first_set[i], second_set[j]):
+            if not permutations_has_intersections(first_set[i], second_set[j]):  # убираем лишние перестановки
                 final_first_set.append(first_set[i])
                 final_second_set.append(second_set[j])
 
