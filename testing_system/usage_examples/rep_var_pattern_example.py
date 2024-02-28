@@ -11,12 +11,18 @@ def usage_example():
 
     ss = []
     patterns = []
+    original_matches = []
 
     for _ in range(10):
-        s, pattern, original_matches = generator.generate(s_len=50, pattern_case=PatternCase('random_case'), max_var_len=1, k=2)
+        s, pattern, original_match = generator.generate(s_len=25, pattern_case=PatternCase('hard_case'), max_var_len=1, k=2)
 
         ss.append(s)
         patterns.append(pattern)
+        original_matches.append(original_match)
+
+        # print(f's: {s}')
+        # print(f'pattern: {pattern}')
+        # print(f'original_matches: {original_matches}', end='\n\n')
 
     for i in tqdm(range(len(patterns))):
         s = ss[i]
@@ -34,6 +40,7 @@ def usage_example():
     for i in tqdm(range(len(patterns))):
         s = ss[i]
         pattern = patterns[i]
+        original_match = original_matches[i]
 
         matches = match_rep_var_pattern(s=s, pattern=pattern)
         check_result = generator.check_pattern(s=s, pattern=pattern, matches=matches)
@@ -42,7 +49,7 @@ def usage_example():
             continue
         else:
             counter += 1
-            print(f'Error: s = {s}, pattern = {pattern}, matches = {matches}')
+            print(f'Error: s = {s}, pattern = {pattern}, matches = {matches}, original_match = {original_match}')
 
     if counter == 0:
         print('Ok!')
