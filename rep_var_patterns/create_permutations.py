@@ -41,8 +41,8 @@ def create_permutations(n: int, k: int) -> tuple[list[Any], list[Any]]:
 
         for j in range(len(second_set)):
 
-            # if not permutations_has_intersections(first_set[i], second_set[j]):
-            final_first_set.append(first_set[i])
-            final_second_set.append(second_set[j])
+            if not permutations_has_intersections(first_set[i], second_set[j]):
+                final_first_set.append(first_set[i])
+                final_second_set.append(second_set[j])
 
     return final_first_set, final_second_set
