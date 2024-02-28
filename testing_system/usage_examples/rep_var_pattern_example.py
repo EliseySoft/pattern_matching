@@ -13,8 +13,8 @@ def usage_example():
     patterns = []
     original_matches = []
 
-    for _ in range(10):
-        s, pattern, original_match = generator.generate(s_len=25, pattern_case=PatternCase('hard_case'), max_var_len=1, k=2)
+    for _ in range(100):
+        s, pattern, original_match = generator.generate(s_len=12, pattern_case=PatternCase('hard_case'), max_var_len=1, k=2)
 
         ss.append(s)
         patterns.append(pattern)
